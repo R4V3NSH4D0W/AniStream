@@ -5,7 +5,6 @@ import React, { Suspense } from "react";
 async function AnimeDetail({ params }: { params: { id: string } }) {
   const { id } = await params;
   const animeInfo = await getAnimeInfo(id);
-  console.log(animeInfo);
 
   return (
     <div>

@@ -23,8 +23,9 @@ export function Card({
   showViewAll,
 }: CardProps) {
   const router = useRouter();
+
   return (
-    <div className="mt-5 p-2 lg:px-40">
+    <div className="mt-5 p-4 lg:p-2 lg:px-8">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-bold text-white">{title}</h2>
         {showViewAll && (
@@ -38,7 +39,7 @@ export function Card({
           </Button>
         )}
       </div>
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 ">
         {animeList.map((anime) => (
           <div
             key={anime.id}
@@ -50,13 +51,13 @@ export function Card({
               alt={anime.title?.toString() || "Anime image"}
               width={300}
               height={400}
-              className="rounded-lg object-cover aspect-[2/3]"
+              className="rounded-lg object-cover aspect-[2/3] "
             />
-            <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black to-transparent">
+            <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black to-transparent rounded-b-md">
               <p className="text-white text-sm lg:text-md font-medium truncate">
                 {anime.title as string}
               </p>
-              <div className=" flex flex-row space-x-4 mt-2">
+              <div className=" flex flex-row space-x-2 mt-2">
                 <div className="flex flex-row items-center text-white text-sm space-x-2 bg-red-700 bg-opacity-50 px-2 py-1 rounded-sm">
                   <FaRegKeyboard />
                   <label>{anime.sub}</label>

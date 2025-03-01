@@ -11,7 +11,6 @@ interface MovieCardProps {
 
 export function MovieCard({ title, movieList }: MovieCardProps) {
   const router = useRouter();
-  console.log(movieList);
   const handleMovieClick = (id: string) => {
     const encodedId = encodeURIComponent(id);
     router.push(`/movies/${encodedId}`);

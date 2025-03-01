@@ -1,4 +1,4 @@
-import { getEpisdoeServers } from "@/action/get-drama";
+// import { getEpisdoeServers } from "@/action/get-drama";
 
 export default async function WatchPage({
   params,
@@ -6,9 +6,7 @@ export default async function WatchPage({
   params: { ids: string[] };
 }) {
   const [movieId, episodeId] = params.ids;
-  const getServer = await getEpisdoeServers(episodeId, movieId);
-
-  console.log("server", getServer);
+  //   const getServer = await getEpisdoeServers(episodeId, movieId);
 
   return (
     <div>

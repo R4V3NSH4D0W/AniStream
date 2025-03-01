@@ -31,14 +31,14 @@ export default function BrowseCard({
   };
 
   return (
-    <div className="p-4 lg:px-40">
+    <div className="p-4 lg:px-8">
       <h1 className="text-3xl font-bold text-white mb-8">{title}</h1>
 
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-8">
         {animeList.map((anime) => (
           <div
             key={anime.id}
-            className="relative cursor-pointer group"
+            className="relative cursor-pointer group transition-transform duration-300 transform hover:scale-105"
             onClick={() => router.push(`/anime/${anime.id}`)}
           >
             <Image
@@ -46,13 +46,13 @@ export default function BrowseCard({
               alt={anime.title?.toString() || "Anime image"}
               width={300}
               height={400}
-              className="rounded-lg object-cover aspect-[2/3] transition-transform group-hover:scale-105"
+              className="rounded-lg object-cover aspect-[2/3]"
             />
             <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black to-transparent">
               <p className="text-white text-sm lg:text-md font-medium truncate">
                 {anime.title as string}
               </p>
-              <div className=" flex flex-row space-x-4 mt-2">
+              <div className="flex flex-row space-x-4 mt-2">
                 <div className="flex flex-row items-center text-white text-sm space-x-2 bg-red-700 bg-opacity-50 px-2 py-1 rounded-sm">
                   <FaRegKeyboard />
                   <label>{anime.sub}</label>
@@ -63,7 +63,7 @@ export default function BrowseCard({
                 </div>
               </div>
             </div>
-            <div className=" absolute top-2 left-2 bg-red-700 text-white px-2 py-1 rounded-lg">
+            <div className="absolute top-2 left-2 bg-red-700 text-white px-2 py-1 rounded-lg">
               {anime.type}
             </div>
           </div>

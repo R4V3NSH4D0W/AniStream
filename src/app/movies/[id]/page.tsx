@@ -7,7 +7,6 @@ import React, { Suspense } from "react";
 async function MoviePage({ params }: { params: { id: string } }) {
   const decodedId = decodeURIComponent(params.id);
   const movieInfo = await getMovieInfo(decodedId);
-  console.log(movieInfo);
   return (
     <div>
       <Suspense
