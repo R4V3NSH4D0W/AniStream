@@ -5,8 +5,8 @@ import { Button } from "./ui/button";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
 import { AnimeCategory } from "@/action/get-anime";
-import { FaRegKeyboard } from "react-icons/fa";
 import { MdOutlineKeyboardVoice } from "react-icons/md";
+import { BsCcSquare } from "react-icons/bs";
 
 interface BrowseCardProps {
   title: string;
@@ -52,12 +52,12 @@ export default function BrowseCard({
               <p className="text-white text-sm lg:text-md font-medium truncate">
                 {anime.title as string}
               </p>
-              <div className="flex flex-row space-x-4 mt-2">
-                <div className="flex flex-row items-center text-white text-sm space-x-2 bg-red-700 bg-opacity-50 px-2 py-1 rounded-sm">
-                  <FaRegKeyboard />
+              <div className="flex flex-row space-x-1 mt-2">
+                <div className="flex flex-row items-center text-white text-sm space-x-1 bg-red-700 bg-opacity-50 px-2 py-1 rounded-sm">
+                  <BsCcSquare />
                   <label>{anime.sub}</label>
                 </div>
-                <div className="flex flex-row items-center text-white text-sm space-x-2 bg-green-500 bg-opacity-50 px-2 py-1 rounded-sm">
+                <div className="flex flex-row items-center text-white text-sm space-x-1 bg-green-500 bg-opacity-50 px-2 py-1 rounded-sm">
                   <MdOutlineKeyboardVoice />
                   <label>{anime.dub}</label>
                 </div>

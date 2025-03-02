@@ -70,7 +70,7 @@ export default function ScheduleComponent() {
                 <button
                   key={date.toISOString()}
                   onClick={() => setSelectedDate(date)}
-                  className={`min-w-[70px] p-2 text-center rounded-lg transition-colors duration-200 shrink-0 snap-center ${
+                  className={`min-w-[70px] p-2 text-center rounded-lg transition-colors duration-200 shrink-0 snap-center cursor-pointer ${
                     format(date, "yyyy-MM-dd") ===
                     format(selectedDate, "yyyy-MM-dd")
                       ? "bg-red-600 text-white"
@@ -100,7 +100,7 @@ export default function ScheduleComponent() {
           <div
             key={anime.id}
             className="group grid grid-cols-[1fr_3fr_1fr] md:grid-cols-[10%_80%_10%] items-center border-b border-gray-700 py-3 
-                       text-gray-300 hover:text-white transition-all duration-200 transform
+                       text-gray-300 hover:text-white transition-all duration-200 transform cursor-pointer
                        hover:scale-[1.02] hover:bg-gray-800 px-2 md:px-4"
           >
             <div className="border-r border-gray-700 pr-2 md:pr-3 text-sm md:text-base">
@@ -118,7 +118,7 @@ export default function ScheduleComponent() {
         {scheduleData.length > 5 && (
           <button
             onClick={() => setShowAll(!showAll)}
-            className="w-full py-3 text-center text-red-400 hover:text-red-300 
+            className="w-full py-3 text-center text-red-400 hover:text-red-300  cursor-pointer
                        transition-colors duration-200 font-medium rounded-lg hover:bg-gray-800
                        sticky bottom-2 backdrop-blur-sm bg-gray-900/80"
           >

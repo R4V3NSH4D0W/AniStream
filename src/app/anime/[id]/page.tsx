@@ -1,9 +1,13 @@
 import { getAnimeInfo } from "@/action/get-anime";
+
 import AnimeHeroSection from "@/components/anime/anime-hero-section";
+import { Card } from "@/components/card";
+import { VerticalCardSection } from "@/lib/helper";
+
 import React, { Suspense } from "react";
 
 async function AnimeDetail({ params }: { params: { id: string } }) {
-  const { id } = await params;
+  const { id } = params;
   const animeInfo = await getAnimeInfo(id);
 
   return (
@@ -15,6 +19,15 @@ async function AnimeDetail({ params }: { params: { id: string } }) {
       >
         <AnimeHeroSection animeInfo={animeInfo} />
       </Suspense>
+      <div className="grid grid-cols-1 lg:grid-cols-[75%_25%] xl:grid-cols-[75%_25%]">
+        <Card
+          title="Recommended for you"
+          animeList={animeInfo?.recommendations}
+          viewAllLink={""}
+          showViewAll={false}
+        />
+        <VerticalCardSection category="most-popular" slice={7} />
+      </div>
     </div>
   );
 }

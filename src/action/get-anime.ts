@@ -65,14 +65,6 @@ export async function getSpotLight() {
   }
 }
 
-export async function getAnimeInfo(id: string) {
-  try {
-    return await zoroAnime.fetchAnimeInfo(id);
-  } catch (error) {
-    console.error("Error fetching anime info:", error);
-    return null;
-  }
-}
 
 export async function getGernres() {
     try{
@@ -87,11 +79,34 @@ export async function getGernres() {
 export async function getSchedule(date?:string){
     try{
         const response= await zoroAnime.fetchSchedule(date);
-        console.log("schedule",response)
         return response.results;
     }catch(error){
         console.error("Error fetching Genre",error)
         return null;
     }
 
+}
+
+export async function getAnimeInfo(id: string) {
+  try {
+    const animeInfo = await zoroAnime.fetchAnimeInfo(id);
+    const malId = animeInfo?.malID || animeInfo?.alID;
+    let jikanData = null;
+
+    if (malId) {
+      try {
+        const response = await fetch(`https://api.jikan.moe/v4/anime/${malId}`);
+        jikanData = await response.json();
+      } catch (jikanError) {
+        console.error("Error fetching anime info from Jikan:", jikanError);
+      }
+    }
+    return {
+      ...animeInfo,
+      jikanData: jikanData?.data || null,
+    };
+  } catch (error) {
+    console.error("Error fetching anime info:", error);
+    return null;
+  }
 }

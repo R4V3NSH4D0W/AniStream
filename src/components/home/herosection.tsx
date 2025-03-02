@@ -30,7 +30,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ spotlight }) => {
   };
 
   return (
-    <div className="relative w-full h-[500px] lg:h-[600px] overflow-hidden z-40">
+    <div className="relative w-full h-[400px] lg:h-[600px] overflow-hidden z-40">
       {/* Gradient Overlay Layer */}
       <div className="absolute inset-0 bg-gradient-to-tr from-gray-900 to-transparent z-10" />
 
@@ -49,15 +49,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({ spotlight }) => {
             objectFit="cover"
             className="absolute z-0"
           />
-          <div className="absolute bottom-4 left-2 lg:bottom-0  lg:top-20  lg:left-8 z-20 flex flex-col space-y-4">
+          <div className="absolute bottom-10 left-4 lg:bottom-0  lg:top-20  lg:left-8 z-20 flex flex-col space-y-4">
             <label className="text-white text-lg font-bold">
               #{anime.rank as string}. Spotlight
             </label>
-            <label className="text-white text-xl lg:text-3xl font-bold w-2xl ">
+            <label className="text-white text-xl lg:text-3xl font-bold w-2xl max-w-[20rem] lg:max-w-full ">
               {anime.title as string}
             </label>
-            <div className=" flex flex-row items-center space-x-3 text-white">
-              <div className=" flex flex-row items-center space-x-1">
+            <div className=" flex flex-row items-center space-x-3 text-white flex-wrap">
+              <div className=" flex flex-row items-center space-x-1 space-y-1">
                 <IoPlayCircleOutline />
                 <span> {anime.type}</span>
               </div>
@@ -104,7 +104,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ spotlight }) => {
       ))}
 
       {/* Navigation Buttons */}
-      <div className=" absolute right-2 lg:right-5 bottom-10 transform -translate-y-1/2 z-20">
+      <div className=" absolute right-2 lg:right-5 bottom-4  z-20">
         <div className=" flex flex-col space-y-2">
           <Button
             variant="outline"

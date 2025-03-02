@@ -1,42 +1,11 @@
 export const dynamic = "force-dynamic";
 import { Suspense } from "react";
-import {
-  getSpotLight,
-  fetchAnimeList,
-  type AnimeCategory,
-  getGernres,
-} from "@/action/get-anime";
-import { Card } from "@/components/card";
+import { getSpotLight, getGernres } from "@/action/get-anime";
+
 import HeroSection from "@/components/home/herosection";
-import VerticalCard from "@/components/home/vertical-card";
 import GenresCard from "@/components/home/genres";
 import ScheduleComponent from "@/components/home/schedule";
-
-async function AnimeSection({ category }: { category: AnimeCategory }) {
-  const data = await fetchAnimeList(category, 1);
-
-  return (
-    <Card
-      title={formatCategoryTitle(category)}
-      category={category}
-      animeList={data.results.slice(0, 12)}
-      viewAllLink={`/browse/${category}?page=1`}
-      showViewAll={data.results.length > 12}
-    />
-  );
-}
-
-async function VerticalCardSection({ category }: { category: AnimeCategory }) {
-  const data = await fetchAnimeList(category, 1);
-
-  return (
-    <VerticalCard
-      title={formatCategoryTitle(category)}
-      verticalData={data.results.slice(0, 5)}
-      viewAllLink={`/browse/${category}?page=1`}
-    />
-  );
-}
+import { AnimeSection, VerticalCardSection } from "@/lib/helper";
 
 export default async function Home() {
   const spotlight = await getSpotLight();
@@ -64,11 +33,4 @@ export default async function Home() {
       </div>
     </div>
   );
-}
-
-function formatCategoryTitle(category: AnimeCategory): string {
-  return category
-    .split("-")
-    .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(" ");
 }

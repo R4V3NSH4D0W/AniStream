@@ -1,3 +1,4 @@
+"use client";
 import { IAnimeResult } from "@consumet/extensions";
 import Image from "next/image";
 import React from "react";
@@ -7,27 +8,35 @@ import { BsCcSquare } from "react-icons/bs";
 import { IoMicOutline } from "react-icons/io5";
 import { Button } from "../ui/button";
 import { FaAngleRight } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 interface IVerticalCardProps {
   title: string;
   verticalData: IAnimeResult[];
   viewAllLink: string;
+  slice?: number;
 }
 
 function VerticalCard({
   title,
   verticalData,
   viewAllLink,
+  slice,
 }: IVerticalCardProps) {
+  const router = useRouter();
   return (
     <div className="mt-4 lg:mt-8 px-2 sm:px-4 lg:px-0 flex flex-col space-y-2 w-full ">
       <span className="text-white text-xl sm:text-2xl font-semibold px-2 sm:px-0">
         {title}
       </span>
       <div className="flex flex-col space-y-2 sm:space-y-4 mt-1 sm:mt-2">
-        {verticalData.slice(0, 6).map((anime) => (
-          <div key={anime.id} className="group">
-            <div className="flex flex-row space-x-2 sm:space-x-3 text-white p-2 hover:bg-gray-800/50 rounded-lg transition-colors">
+        {verticalData.slice(0, slice).map((anime) => (
+          <div
+            key={anime.id}
+            className="group"
+            onClick={() => router.push(`/anime/${anime.id}`)}
+          >
+            <div className="flex flex-row space-x-2 sm:space-x-3 text-white p-2 hover:bg-gray-800/50 rounded-lg transition-colors cursor-pointer">
               {/* Image Container */}
               <div className="relative w-16 h-20 sm:w-20 sm:h-22 aspect-square">
                 <Image
@@ -42,7 +51,7 @@ function VerticalCard({
               {/* Content Container */}
               <div className="flex flex-col justify-center flex-1">
                 <label className="font-medium text-sm sm:text-base truncate">
-                  {truncateText(anime.title as string, 40)}
+                  {truncateText(anime.title as string, 30)}
                 </label>
 
                 {/* Metadata */}

@@ -1,3 +1,4 @@
+import { AnimeCategory } from "@/action/get-anime";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -64,3 +65,11 @@ export const formatDateWithTimezone = (date: Date): string => {
 
   return `(GMT${tzSign}${tzHours}:${tzMinutes.toString().padStart(2, "0")}) ${formattedDate}`;
 };
+
+export function formatCategoryTitle(category: AnimeCategory): string {
+  return category
+    .split("-")
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
