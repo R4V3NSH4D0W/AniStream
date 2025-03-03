@@ -3,6 +3,7 @@
 import Artplayer from "artplayer";
 import React, { useRef, useEffect } from "react";
 import type { Option as ArtplayerOptions } from "artplayer/types/option";
+import { useStorage } from "@/provider/storage-provider";
 
 interface ArtPlayerProps {
   intro?: { start?: number; end?: number };
@@ -11,6 +12,8 @@ interface ArtPlayerProps {
   option: Omit<ArtplayerOptions, "container">;
   getInstance?: (art: Artplayer) => void;
   className?: string;
+  animeId: string;
+  episodeId: string;
 }
 
 const ArtPlayerComponent = ({
@@ -20,8 +23,14 @@ const ArtPlayerComponent = ({
   option,
   getInstance,
   className,
+  animeId,
+  episodeId,
 }: ArtPlayerProps) => {
   const artRef = useRef<HTMLDivElement>(null);
+  const artInstance = useRef<Artplayer | null>(null);
+  const { addPlayedDuration, getPlayedDuration } = useStorage();
+  const storedPlayedPercentage = getPlayedDuration(animeId, episodeId);
+  console.log("ArtPlayerComponent", storedPlayedPercentage);
 
   useEffect(() => {
     if (!artRef.current) return;
@@ -53,7 +62,7 @@ const ArtPlayerComponent = ({
         {
           width: 250,
           html: "Subtitle",
-          tooltip: "Subtitle",
+          tooltip: "Show",
           selector: [
             {
               html: "Display",
@@ -74,16 +83,45 @@ const ArtPlayerComponent = ({
       ],
     });
 
+    artInstance.current = art;
+
     art.on("resize", () => {
       art.subtitle.style({ fontSize: `${art.height * 0.05}px` });
+    });
+
+    art.on("video:timeupdate", () => {
+      const currentTime = art.currentTime;
+      const duration = art.duration;
+      const percentage = (currentTime / duration) * 100;
+      addPlayedDuration(animeId, episodeId, percentage);
     });
 
     getInstance?.(art);
 
     return () => {
       art.destroy(true);
+      artInstance.current = null;
     };
-  }, [option, tracks, intro, outro, getInstance]);
+  }, [
+    option,
+    tracks,
+    intro,
+    outro,
+    getInstance,
+    animeId,
+    episodeId,
+    addPlayedDuration,
+  ]);
+
+  useEffect(() => {
+    if (artInstance.current && storedPlayedPercentage > 0) {
+      const duration = artInstance.current.duration;
+      const seekToTime = (storedPlayedPercentage / 100) * duration;
+      if (Math.abs(artInstance.current.currentTime - seekToTime) > 0.5) {
+        artInstance.current.currentTime = seekToTime;
+      }
+    }
+  }, [storedPlayedPercentage]);
 
   return (
     <div ref={artRef} className={className} style={{ background: "none" }} />

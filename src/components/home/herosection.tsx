@@ -12,6 +12,7 @@ import { truncateText } from "@/lib/utils";
 import { GoClock } from "react-icons/go";
 import { MdOutlineMicNone } from "react-icons/md";
 import { BsCcSquare } from "react-icons/bs";
+import { useStorage } from "@/provider/storage-provider";
 
 interface HeroSectionProps {
   spotlight: IAnimeResult[];
@@ -19,6 +20,8 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ spotlight }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { addBookmark, removeBookmark, bookmarks } = useStorage();
+  console.log("Bookamrks", bookmarks);
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % spotlight.length);
   };
@@ -27,6 +30,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({ spotlight }) => {
     setCurrentIndex(
       (prevIndex) => (prevIndex - 1 + spotlight.length) % spotlight.length
     );
+  };
+
+  const toggleBookmark = (id: string) => {
+    if (bookmarks.includes(id)) {
+      removeBookmark(id);
+    } else {
+      addBookmark(id);
+    }
   };
 
   return (
@@ -93,10 +104,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({ spotlight }) => {
               </Button>
               <Button
                 variant="outline"
-                className=" border-red-500 bg-transparent text-red-500 rounded-2xl text-sm lg:text-md hover:bg-red-600 hover:text-white"
+                className={`border-red-500 text-sm lg:text-md ${
+                  bookmarks.includes(anime.id)
+                    ? "bg-red-500 text-white"
+                    : "bg-transparent text-red-500"
+                }`}
+                onClick={() => toggleBookmark(anime.id)}
               >
                 <FaPlus />
-                Bookmark
+                {bookmarks.includes(anime.id) ? "Bookmarked" : "Bookmark"}
               </Button>
             </div>
           </div>

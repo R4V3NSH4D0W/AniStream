@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useMemo, useRef, useEffect } from "react";
 import Hls from "hls.js";
 import artplayerPluginHlsControl from "artplayer-plugin-hls-control";
@@ -20,18 +19,23 @@ interface AnimePlayerProps {
   episodeInfo: IEpisodeSource;
   animeInfo: IAnimeInfo | null;
   subOrDub: "sub" | "dub";
+  animeId: string;
+  episodeId: string;
 }
 
 const AnimePlayer = ({
   episodeInfo,
   animeInfo,
   subOrDub,
+  animeId,
+  episodeId,
 }: AnimePlayerProps) => {
   const playerRef = useRef<HTMLDivElement>(null);
   const artInstance = useRef<ArtPlayerWithHls | null>(null);
   const hlsRef = useRef<Hls | null>(null);
   const uri = episodeInfo.sources[0]?.url;
 
+  console.log("AnimePlayer", uri);
   useEffect(() => {
     return () => {
       // Cleanup HLS when component unmounts
@@ -133,6 +137,8 @@ const AnimePlayer = ({
     >
       {uri ? (
         <ArtPlayerComponent
+          animeId={animeId}
+          episodeId={episodeId}
           option={options}
           tracks={episodeInfo.tracks}
           intro={episodeInfo.intro}

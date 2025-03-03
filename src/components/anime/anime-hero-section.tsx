@@ -7,6 +7,8 @@ import { truncateText } from "@/lib/utils";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { GoPlus } from "react-icons/go";
 import { useRouter } from "next/navigation";
+import { BsDot } from "react-icons/bs";
+import Link from "next/link";
 
 interface MovieHeroSectionProps {
   animeInfo: IAnimeResult | null;
@@ -34,7 +36,7 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[75%_25%] lg:h-[30rem]">
+    <div className="grid grid-cols-1 lg:grid-cols-[75%_25%] ">
       {/* Image and Title Section */}
       <div
         className="relative w-full h-full bg-cover bg-center flex items-center justify-center lg:justify-normal"
@@ -57,9 +59,13 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
             </div>
             <div className="flex flex-col space-y-2">
               <div className="hidden lg:block">
-                <div className="flex flex-row space-x-2">
-                  <label>Home</label>
+                <div className="flex flex-row space-x-2 items-center">
+                  <Link href={`/`}>
+                    <label className="  cursor-pointer">Home</label>
+                  </Link>
+                  <BsDot />
                   <label>{animeInfo?.type}</label>
+                  <BsDot />
                   <label>{animeInfo?.title as string}</label>
                 </div>
               </div>

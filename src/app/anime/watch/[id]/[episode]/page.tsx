@@ -18,7 +18,7 @@ export default async function WatchPage({ params }: WatchPageProps) {
     getAnimeInfo(id),
     getAnimeSource(decodedEpisode),
   ]);
-  console.log(animeInfo);
+
   const episodeData = {
     sources: animeServer.sources,
     tracks: animeServer.subtitles?.map(
@@ -48,6 +48,8 @@ export default async function WatchPage({ params }: WatchPageProps) {
               episodeInfo={episodeData}
               animeInfo={animeInfo}
               subOrDub={subOrDub}
+              animeId={id}
+              episodeId={decodedEpisode}
             />
           </div>
 
@@ -76,14 +78,7 @@ export default async function WatchPage({ params }: WatchPageProps) {
           </p>
         </div>
       </div>
-      {/* <Card
-        title="Releated Anime for you"
-        animeList={animeInfo?.relatedAnime}
-        viewAllLink={""}
-        showViewAll={false}
-      /> */}
       <ReleatedCard title="Releated Anime" animeInfo={animeInfo} />
-
       <div className="grid grid-cols-1 lg:grid-cols-[75%_25%]">
         <Card
           title="Recommended for you"

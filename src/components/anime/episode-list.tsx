@@ -1,8 +1,10 @@
 "use client";
-
 import { IAnimeInfo } from "@consumet/extensions";
 import Link from "next/link";
 import { FiPlay, FiChevronRight, FiClock } from "react-icons/fi";
+import { useState } from "react";
+import { useStorage } from "@/provider/storage-provider";
+import clsx from "clsx";
 
 interface EpisodeListProps {
   episodes: IAnimeInfo["episodes"];
@@ -15,20 +17,35 @@ const EpisodeList = ({
   currentEpisodeId,
   animeId,
 }: EpisodeListProps) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const { getPlayedDuration } = useStorage();
+
+  const filteredEpisodes = episodes?.filter(
+    (episode) =>
+      episode.number.toString().includes(searchTerm) ||
+      episode.title?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="bg-gray-800/80 backdrop-blur-lg rounded-xl p-4 h-[700px] overflow-y-auto border border-gray-700 shadow-2xl">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-2xl font-bold bg-gradient-to-r from-red-400 to-red-700 bg-clip-text text-transparent">
           Episodes
         </h3>
-        <span className="text-sm text-gray-400">
-          Total: {episodes?.length || 0}
-        </span>
+        <input
+          type="text"
+          placeholder="Search episode..."
+          className="px-3 py-1 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-red-500"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
       </div>
 
       <div className="space-y-3">
-        {episodes?.map((episode) => {
+        {filteredEpisodes?.map((episode) => {
           const isCurrent = episode.id === currentEpisodeId;
+          const playedPercentage = getPlayedDuration(animeId, episode.id);
+
           return (
             <Link
               key={episode.id}
@@ -39,8 +56,13 @@ const EpisodeList = ({
                   : "hover:bg-gray-700/50 border border-transparent hover:border-gray-600"
               }`}
             >
-              {/* Progress indicator (optional) */}
-              <div className="absolute bottom-0 left-0 h-[2px] bg-red-500 w-1/3" />
+              {/* Progress bar showing played percentage */}
+              <div
+                className={clsx("absolute bottom-0 left-0 h-[2px] bg-red-500")}
+                style={{
+                  width: playedPercentage > 0 ? `${playedPercentage}%` : "2%",
+                }}
+              />
 
               <div className="flex-shrink-0">
                 <div
@@ -91,7 +113,6 @@ const EpisodeList = ({
         })}
       </div>
 
-      {/* Scrollbar Styling */}
       <style jsx>{`
         ::-webkit-scrollbar {
           width: 6px;

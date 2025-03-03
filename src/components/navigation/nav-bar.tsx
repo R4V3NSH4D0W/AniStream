@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { Input } from "../ui/input";
+import Link from "next/link";
 
 function NavBar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -10,9 +11,11 @@ function NavBar() {
     <div className="p-4 px-8 fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-gray-900 to-transparent">
       <div className="flex items-center justify-between">
         {/* Logo */}
-        <label className="text-2xl md:text-3xl font-semibold text-white">
-          Ani<span className="text-red-500">Stream</span>
-        </label>
+        <Link href={"/"}>
+          <label className="text-2xl md:text-3xl font-semibold text-white cursor-pointer">
+            Ani<span className="text-red-500">Stream</span>
+          </label>
+        </Link>
 
         <div className="flex items-center gap-x-4">
           <div
