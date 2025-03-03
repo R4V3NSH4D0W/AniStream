@@ -1,3 +1,4 @@
+"use client";
 import { IAnimeResult } from "@consumet/extensions";
 import Image from "next/image";
 import React from "react";
@@ -5,6 +6,7 @@ import { Button } from "../ui/button";
 import { truncateText } from "@/lib/utils";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { GoPlus } from "react-icons/go";
+import { useRouter } from "next/navigation";
 
 interface MovieHeroSectionProps {
   animeInfo: IAnimeResult | null;
@@ -22,6 +24,15 @@ type IType = {
 };
 
 function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
+  const router = useRouter();
+
+  const handleWatchNowClick = () => {
+    if (animeInfo?.id && animeInfo?.episodes[0]) {
+      const episodeId = animeInfo?.episodes[0].id;
+      router.push(`/anime/watch/${animeInfo.id}/${episodeId}`);
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[75%_25%] lg:h-[30rem]">
       {/* Image and Title Section */}
@@ -63,7 +74,11 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
               </div>
 
               <div className="flex flex-row space-x-2 justify-center lg:justify-start">
-                <Button variant="ghost" className="bg-red-600">
+                <Button
+                  variant="ghost"
+                  className="bg-red-600"
+                  onClick={handleWatchNowClick}
+                >
                   <IoPlayCircleOutline size={24} />
                   Watch Now
                 </Button>

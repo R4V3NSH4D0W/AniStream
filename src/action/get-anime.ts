@@ -1,4 +1,3 @@
-// app/actions/get-anime.ts
 import { ANIME } from "@consumet/extensions";
 
 const zoroAnime = new ANIME.Zoro();
@@ -110,3 +109,21 @@ export async function getAnimeInfo(id: string) {
     return null;
   }
 }
+
+export async function getAnimeSource(episodeId: string) {
+  try {
+    const response = await fetch(`https://api.lenishmagar.me/api/zoroanime/episodesource?id=${episodeId}`);
+    console.log("Direct Hit", response);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch episode source with status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch Episode Source", error);
+    return null;
+  }
+}
+
+
