@@ -18,6 +18,7 @@ import {
   FaPlusCircle,
   FaRegBookmark,
 } from "react-icons/fa";
+import Image from "next/image";
 
 function NavBar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -182,14 +183,21 @@ function NavBar() {
       <div className="p-4 px-2 lg:px-8 fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-gray-900 to-transparent">
         {/* Main Header Row */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center ">
             <button
               className="text-white text-2xl p-1 hover:bg-gray-800 rounded-lg transition-all"
               onClick={() => setIsDrawerOpen(!isDrawerOpen)}
             >
               {isDrawerOpen ? <IoClose /> : <FiMenu />}
             </button>
-            <Link href={"/"}>
+            <Link href={"/"} className=" flex flex-row items-center gap-2">
+              <Image
+                src="/anistream.png"
+                alt="AniStream"
+                width={40}
+                height={40}
+                className="rounded-md"
+              />
               <label className="text-2xl md:text-3xl font-semibold text-white cursor-pointer">
                 Ani<span className="text-red-500">Stream</span>
               </label>
@@ -244,7 +252,18 @@ function NavBar() {
         }`}
       >
         <div className="p-2 px-4 border-b border-gray-700">
-          <Link href={"/"} onClick={() => setIsDrawerOpen(false)}>
+          <Link
+            href={"/"}
+            onClick={() => setIsDrawerOpen(false)}
+            className=" flex flex-row items-center gap-2"
+          >
+            <Image
+              src="/anistream.png"
+              alt="AniStream"
+              width={40}
+              height={40}
+              className="rounded-md"
+            />
             <label className="text-2xl md:text-3xl font-semibold text-white cursor-pointer">
               Ani<span className="text-red-500">Stream</span>
             </label>

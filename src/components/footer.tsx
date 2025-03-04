@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import { FaGithub, FaDiscord } from "react-icons/fa";
 
@@ -9,6 +10,13 @@ function Footer() {
           {/* Logo/Title */}
           <div className="mb-4">
             <div className=" flex flex-row items-center justify-center">
+              <Image
+                src="/anistream.png"
+                alt="AniStream"
+                width={40}
+                height={40}
+                className="rounded-md"
+              />
               <span className="text-3xl font-bold">
                 Ani
                 <span className=" text-red-500">Stream</span>
