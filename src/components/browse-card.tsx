@@ -13,7 +13,8 @@ interface BrowseCardProps {
   animeList: IAnimeResult[];
   currentPage: number;
   hasNextPage: boolean | undefined;
-  category: AnimeCategory;
+  category: AnimeCategory | string;
+  type?: string;
 }
 
 export default function BrowseCard({
@@ -22,12 +23,17 @@ export default function BrowseCard({
   currentPage,
   hasNextPage,
   category,
+  type,
 }: BrowseCardProps) {
   const router = useRouter();
 
   const handlePagination = (direction: "prev" | "next") => {
     const newPage = direction === "next" ? currentPage + 1 : currentPage - 1;
-    router.push(`/browse/${category}?page=${newPage}`);
+    if (type === "genre") {
+      router.push(`/genres/${category}?page=${newPage}`);
+    } else {
+      router.push(`/browse/${category}?page=${newPage}`);
+    }
   };
 
   return (

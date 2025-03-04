@@ -6,18 +6,28 @@ import { Card } from "@/components/card";
 import { VerticalCardSection } from "@/lib/helper";
 import Image from "next/image";
 
-interface WatchPageProps {
-  params: { id: string; episode: string };
-}
-
-export default async function WatchPage({ params }: WatchPageProps) {
-  const { id, episode } = params;
+export default async function WatchPage({
+  params,
+}: {
+  params: Promise<{ id: string; episode: string }>;
+}) {
+  const { id, episode } = await params;
   const decodedEpisode = decodeURIComponent(episode);
 
   const [animeInfo, animeServer] = await Promise.all([
     getAnimeInfo(id),
     getAnimeSource(decodedEpisode),
   ]);
+
+  if (!animeServer) {
+    return (
+      <div className="flex items-center justify-center h-screen text-center text-white">
+        <p className="text-lg">
+          Failed to fetch episode source. Please try again later.
+        </p>
+      </div>
+    );
+  }
 
   const episodeData = {
     sources: animeServer.sources,
@@ -39,10 +49,10 @@ export default async function WatchPage({ params }: WatchPageProps) {
     : "dub";
 
   return (
-    <div>
-      <div className=" p-2 lg:p-8 mt-12">
-        <div className=" grid grid-cols-1 lg:grid-cols-[75%_25%] gap-6">
-          <div className=" h-full w-full">
+    <div className=" mb-4">
+      <div className="p-2 lg:p-8 mt-[4rem] lg:mt-14">
+        <div className="grid grid-cols-1 lg:grid-cols-[75%_25%] gap-6">
+          <div className="h-full w-full">
             <AnimePlayer
               key={animeServer.sources[0].url}
               episodeInfo={episodeData}
@@ -53,7 +63,7 @@ export default async function WatchPage({ params }: WatchPageProps) {
             />
           </div>
 
-          <div className=" w-full">
+          <div className="w-full">
             <EpisodeList
               episodes={animeInfo?.episodes}
               currentEpisodeId={decodedEpisode}

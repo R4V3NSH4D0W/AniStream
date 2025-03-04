@@ -5,10 +5,11 @@ import React from "react";
 import { Button } from "../ui/button";
 import { truncateText } from "@/lib/utils";
 import { IoPlayCircleOutline } from "react-icons/io5";
-import { GoPlus } from "react-icons/go";
 import { useRouter } from "next/navigation";
 import { BsDot } from "react-icons/bs";
 import Link from "next/link";
+import { useStorage } from "@/provider/storage-provider";
+import { FaPlus } from "react-icons/fa";
 
 interface MovieHeroSectionProps {
   animeInfo: IAnimeResult | null;
@@ -27,11 +28,20 @@ type IType = {
 
 function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
   const router = useRouter();
+  const { addBookmark, removeBookmark, bookmarks } = useStorage();
 
   const handleWatchNowClick = () => {
     if (animeInfo?.id && animeInfo?.episodes[0]) {
       const episodeId = animeInfo?.episodes[0].id;
       router.push(`/anime/watch/${animeInfo.id}/${episodeId}`);
+    }
+  };
+
+  const toggleBookmark = (id: string) => {
+    if (bookmarks.includes(id)) {
+      removeBookmark(id);
+    } else {
+      addBookmark(id);
     }
   };
 
@@ -82,7 +92,7 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
               <div className="flex flex-row space-x-2 justify-center lg:justify-start">
                 <Button
                   variant="ghost"
-                  className="bg-red-600"
+                  className="bg-red-600 hover:bg-red-700 hover:text-white cursor-pointer"
                   onClick={handleWatchNowClick}
                 >
                   <IoPlayCircleOutline size={24} />
@@ -90,10 +100,17 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
                 </Button>
                 <Button
                   variant="outline"
-                  className="border-red-600 bg-transparent text-red-600"
+                  className={`border-red-600 text-sm lg:text-md hover:bg-red-700 hover:border-red-700 cursor-pointer  hover:text-white ${
+                    bookmarks.includes(animeInfo?.id as string)
+                      ? "bg-red-600 text-white"
+                      : "bg-transparent text-red-600"
+                  }`}
+                  onClick={() => toggleBookmark(animeInfo?.id as string)}
                 >
-                  <GoPlus size={24} />
-                  Bookmark
+                  <FaPlus />
+                  {bookmarks.includes(animeInfo?.id as string)
+                    ? "Bookmarked"
+                    : "Bookmark"}
                 </Button>
               </div>
             </div>

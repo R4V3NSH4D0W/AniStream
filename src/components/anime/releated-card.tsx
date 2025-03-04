@@ -18,8 +18,7 @@ function ReleatedCard({ title, animeInfo }: IReleatedProps) {
             {animeInfo?.relatedAnime.map((rel: IAnimeInfo) => (
               <Link
                 key={rel.id}
-                href={""}
-                // href={`/movies/${encodeURIComponent(rel.id)}`}
+                href={`/anime/${rel?.id}`}
                 className="flex-shrink-0 w-48"
               >
                 <div className="bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-colors">
@@ -27,8 +26,8 @@ function ReleatedCard({ title, animeInfo }: IReleatedProps) {
                     src={rel.image || "/default-image.jpg"}
                     alt={rel.title as string}
                     width={200}
-                    height={300}
-                    className="object-cover aspect-[2/3]"
+                    height={250}
+                    className="object-cover aspect-[2/2.3]"
                   />
                   <div className="p-3">
                     <p className="text-white text-sm font-medium truncate">

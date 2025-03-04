@@ -1,37 +1,31 @@
-import { AnimeCategory, fetchAnimeList } from "@/action/get-anime";
 import NavBar from "@/components/navigation/nav-bar";
 import BrowseCard from "@/components/browse-card";
+import { serchByGenres } from "@/action/get-anime";
 
-export default async function BrowsePage({
+export default async function GenrePage({
   params,
   searchParams,
 }: {
-  params: Promise<{ category: AnimeCategory }>;
+  params: Promise<{ type: string }>;
   searchParams: Promise<{ page?: string }>;
 }) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
 
   const currentPage = Number(resolvedSearchParams.page) || 1;
-  const data = await fetchAnimeList(resolvedParams.category, currentPage);
+  const data = await serchByGenres(resolvedParams.type, currentPage);
 
   return (
     <div className="min-h-screen mt-14">
       <NavBar />
       <BrowseCard
-        title={formatCategoryTitle(resolvedParams.category)}
+        title={resolvedParams.type}
         animeList={data.results}
         currentPage={currentPage}
         hasNextPage={data.hasNextPage}
-        category={resolvedParams.category}
+        category={resolvedParams.type}
+        type="genre"
       />
     </div>
   );
-}
-
-function formatCategoryTitle(category: string): string {
-  return category
-    .split("-")
-    .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(" ");
 }

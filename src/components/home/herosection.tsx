@@ -6,13 +6,14 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import { Button } from "../ui/button";
-import { FaPlus, FaRegPlayCircle } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import { IoCalendarOutline, IoPlayCircleOutline } from "react-icons/io5";
 import { truncateText } from "@/lib/utils";
 import { GoClock } from "react-icons/go";
 import { MdOutlineMicNone } from "react-icons/md";
 import { BsCcSquare } from "react-icons/bs";
 import { useStorage } from "@/provider/storage-provider";
+import Link from "next/link";
 
 interface HeroSectionProps {
   spotlight: IAnimeResult[];
@@ -21,7 +22,7 @@ interface HeroSectionProps {
 const HeroSection: React.FC<HeroSectionProps> = ({ spotlight }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { addBookmark, removeBookmark, bookmarks } = useStorage();
-  console.log("Bookamrks", bookmarks);
+
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % spotlight.length);
   };
@@ -98,13 +99,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({ spotlight }) => {
               {truncateText(anime.description as string, 600)}
             </label>
             <div className=" flex flex-row space-x-4 mt-4 z-30">
-              <Button className=" bg-red-500 text-white rounded-2xl text-sm lg:text-md hover:bg-red-600">
-                <FaRegPlayCircle />
-                Watch Now
-              </Button>
+              <Link
+                href={`/anime/${anime?.id}`}
+                className=" bg-red-500 text-white rounded-sm text-sm flex items-center justify-center  lg:text-md hover:bg-red-600"
+              >
+                <span className=" px-4"> Learn More</span>
+              </Link>
               <Button
                 variant="outline"
-                className={`border-red-500 text-sm lg:text-md ${
+                className={`border-red-500 text-sm lg:text-md hover:bg-red-600 hover:border-red-600 cursor-pointer  hover:text-white ${
                   bookmarks.includes(anime.id)
                     ? "bg-red-500 text-white"
                     : "bg-transparent text-red-500"

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { FaAngleRight } from "react-icons/fa";
 import { Button } from "../ui/button";
 import { getColorFromLetter } from "@/lib/utils";
+import Link from "next/link";
 
 interface IGenresProps {
   genres: string[] | null;
@@ -17,14 +18,15 @@ function GenresCard({ genres }: IGenresProps) {
       <label className="text-2xl text-white font-bold">Genres</label>
       <div className="grid grid-cols-3 gap-2">
         {visibleGenres?.map((genre, index) => (
-          <span
+          <Link
             key={index}
+            href={`/genres/${genre}`}
             className={`px-3 py-1 text-left rounded-md ${getColorFromLetter(
               genre
             )} cursor-pointer`}
           >
             {genre}
-          </span>
+          </Link>
         ))}
       </div>
       {genres && genres.length > 16 && (

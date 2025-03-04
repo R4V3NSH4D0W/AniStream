@@ -7,6 +7,7 @@ import ArtPlayerComponent from "../art-player";
 import { IEpisodeSource } from "@/types/anime";
 import { IAnimeInfo } from "@consumet/extensions";
 import Artplayer from "artplayer";
+import { useStorage } from "@/provider/storage-provider";
 
 type ArtPlayerWithHls = Artplayer & {
   hls?: Hls;
@@ -35,7 +36,22 @@ const AnimePlayer = ({
   const hlsRef = useRef<Hls | null>(null);
   const uri = episodeInfo.sources[0]?.url;
 
-  console.log("AnimePlayer", uri);
+  const { storeContinueWatching } = useStorage();
+
+  useEffect(() => {
+    if (!animeInfo) return;
+
+    storeContinueWatching(
+      animeId,
+      episodeId,
+      {
+        title: (animeInfo.title as string) ?? "",
+        image: animeInfo.image ?? "",
+      },
+      animeInfo.episodes ?? []
+    );
+  }, [animeId, episodeId, animeInfo, storeContinueWatching]);
+
   useEffect(() => {
     return () => {
       // Cleanup HLS when component unmounts

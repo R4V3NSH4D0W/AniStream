@@ -27,7 +27,7 @@ const EpisodeList = ({
   );
 
   return (
-    <div className="bg-gray-800/80 backdrop-blur-lg rounded-xl p-4 h-[700px] overflow-y-auto border border-gray-700 shadow-2xl">
+    <div className="bg-gray-900/80 backdrop-blur-lg rounded-xl p-4 h-[700px] overflow-y-auto border border-gray-800 shadow-2xl">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-2xl font-bold bg-gradient-to-r from-red-400 to-red-700 bg-clip-text text-transparent">
           Episodes
@@ -35,7 +35,7 @@ const EpisodeList = ({
         <input
           type="text"
           placeholder="Search episode..."
-          className="px-3 py-1 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-red-500"
+          className="px-3 py-1 rounded-lg bg-gray-800/30 text-white border border-gray-600 "
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />

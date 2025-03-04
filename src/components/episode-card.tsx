@@ -40,11 +40,12 @@ export default function EpisodesCard({
 
   const calculateBackgroundFill = (episodeId: string) => {
     const playedDuration = getPlayedDuration(id, episodeId);
-    return `linear-gradient(to right, rgba(220, 38, 38, 0.8) ${playedDuration}%, rgba(75, 85, 99, 0.5) ${playedDuration}%)`;
+
+    return `linear-gradient(to right, rgba(220, 38, 38, 0.8) ${playedDuration}%, rgba(75,85,99,0.2) ${playedDuration}%)`;
   };
 
   return (
-    <div className="px-4 md:px-6 bg-gray-800">
+    <div className="px-4 md:px-6 ">
       <div className="w-full">
         <div className="mb-4 space-y-2">
           <div className="flex flex-col md:flex-row justify-between md:items-center gap-3">
@@ -53,7 +54,7 @@ export default function EpisodesCard({
             <div className="flex flex-col md:flex-row md:items-center w-full md:w-auto gap-2">
               {!searchTerm && (
                 <select
-                  className="text-white px-3 py-2 md:py-3 rounded-lg bg-gray-700 border border-gray-600
+                  className="text-white px-3 py-2 md:py-3 rounded-lg bg-gray-800 border border-gray-700
                   focus:outline-none focus:ring-2 focus:ring-red-500 w-full md:w-auto"
                   value={currentRange.join("-")}
                   onChange={(e) => {
@@ -72,8 +73,8 @@ export default function EpisodesCard({
                 <input
                   type="text"
                   placeholder="Search episodes..."
-                  className="w-full px-4 py-2 md:py-3 rounded-lg text-white bg-gray-700 placeholder-gray-500
-                  focus:outline-none focus:ring-2 focus:ring-red-500 pr-12 border border-gray-600"
+                  className="w-full px-4 py-2 md:py-3 rounded-lg text-white bg-gray-800 placeholder-gray-500
+                  focus:outline-none focus:ring-2 focus:ring-red-500 pr-12 border border-gray-700"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -100,8 +101,8 @@ export default function EpisodesCard({
             <Link
               key={ep.id}
               href={`/anime/watch/${id}/${ep.id}`}
-              className="group relative block p-4 bg-gray-700 rounded-lg
-                hover:bg-gray-600 transition-all duration-200 border border-gray-600
+              className="group relative block p-4 bg-gray-800 rounded-lg
+                hover:bg-gray-600 transition-all duration-200 border border-gray-700
                 hover:border-red-500/30 hover:shadow-xl"
               style={{
                 background: calculateBackgroundFill(ep.id),

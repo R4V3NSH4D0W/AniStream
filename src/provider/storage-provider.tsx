@@ -1,5 +1,4 @@
 "use client";
-
 import {
   createContext,
   useCallback,
@@ -11,6 +10,18 @@ import {
 interface PlayedDurations {
   [animeId: string]: {
     [episodeId: string]: number;
+  };
+}
+
+interface ContinueWatching {
+  [animeId: string]: {
+    episodeId: string;
+    episodeNumber: number;
+    animeInfo: {
+      title: string;
+      image: string;
+    };
+    timestamp: number;
   };
 }
 
@@ -26,6 +37,15 @@ interface StorageContextType {
     percentage: number
   ) => void;
   getPlayedDuration: (animeId: string, episodeId: string) => number;
+  continueWatching: ContinueWatching;
+  storeContinueWatching: (
+    animeId: string,
+    episodeId: string,
+    animeInfo: { title: string; image: string },
+    episodes: { id: string; number: number }[]
+  ) => void;
+  getContinueWatching: () => ContinueWatching;
+  removeContinueWatching: (animeId: string) => void;
 }
 
 const StorageContext = createContext<StorageContextType | null>(null);
@@ -37,44 +57,98 @@ export const StorageProvider = ({
 }) => {
   const [bookmarks, setBookmarks] = useState<string[]>([]);
   const [playedDurations, setPlayedDurations] = useState<PlayedDurations>({});
-  console.log("StorageProvider", playedDurations);
+  const [continueWatching, setContinueWatching] = useState<ContinueWatching>(
+    {}
+  );
 
   useEffect(() => {
     const storedBookmarks = localStorage.getItem("bookmarks");
-    if (storedBookmarks) {
-      setBookmarks(JSON.parse(storedBookmarks));
-    }
-  }, []);
+    if (storedBookmarks) setBookmarks(JSON.parse(storedBookmarks));
 
-  useEffect(() => {
     const storedPlayedDurations = localStorage.getItem("playedDurations");
-    if (storedPlayedDurations) {
+    if (storedPlayedDurations)
       setPlayedDurations(JSON.parse(storedPlayedDurations));
-    }
+
+    const storedContinueWatching = localStorage.getItem("continueWatching");
+    if (storedContinueWatching)
+      setContinueWatching(JSON.parse(storedContinueWatching));
   }, []);
 
-  const addBookmark = (id: string) => {
-    const updatedBookmarks = [...bookmarks, id];
-    setBookmarks(updatedBookmarks);
-    localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
-  };
+  const storeContinueWatching = useCallback(
+    (
+      animeId: string,
+      episodeId: string,
+      animeInfo: { title: string; image: string },
+      episodes: { id: string; number: number }[]
+    ) => {
+      const episode = episodes.find((ep) => ep.id === episodeId);
+      if (!episode) return;
 
-  const removeBookmark = (id: string) => {
-    const updatedBookmarks = bookmarks.filter((bookmark) => bookmark !== id);
-    setBookmarks(updatedBookmarks);
-    localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
-  };
+      const timestamp = Date.now(); // Get current timestamp
 
-  const fetchBookmarks = () => {
-    return bookmarks;
-  };
+      setContinueWatching((prev) => {
+        const updated = {
+          ...prev,
+          [animeId]: {
+            episodeId,
+            episodeNumber: episode.number,
+            animeInfo,
+            timestamp,
+          },
+        };
+
+        localStorage.setItem("continueWatching", JSON.stringify(updated));
+        return updated;
+      });
+    },
+    [setContinueWatching]
+  );
+
+  const getContinueWatching = useCallback(() => {
+    const sorted = Object.entries(continueWatching)
+      .sort(([, a], [, b]) => b.timestamp - a.timestamp)
+      .reduce((acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      }, {} as ContinueWatching);
+
+    return sorted;
+  }, [continueWatching]);
+
+  const removeContinueWatching = useCallback((animeId: string) => {
+    setContinueWatching((prev) => {
+      const updated = { ...prev };
+      delete updated[animeId];
+      localStorage.setItem("continueWatching", JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+
+  const addBookmark = useCallback((id: string) => {
+    setBookmarks((prev) => {
+      const updated = [...prev, id];
+      localStorage.setItem("bookmarks", JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+
+  const removeBookmark = useCallback((id: string) => {
+    setBookmarks((prev) => {
+      const updated = prev.filter((bookmark) => bookmark !== id);
+      localStorage.setItem("bookmarks", JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+
+  const fetchBookmarks = useCallback(() => bookmarks, [bookmarks]);
 
   const addPlayedDuration = useCallback(
     (animeId: string, episodeId: string, percentage: number) => {
       setPlayedDurations((prev) => {
-        const updated = { ...prev };
-        updated[animeId] = updated[animeId] || {};
-        updated[animeId][episodeId] = percentage;
+        const updated = {
+          ...prev,
+          [animeId]: { ...prev[animeId], [episodeId]: percentage },
+        };
         localStorage.setItem("playedDurations", JSON.stringify(updated));
         return updated;
       });
@@ -99,6 +173,10 @@ export const StorageProvider = ({
         playedDurations,
         addPlayedDuration,
         getPlayedDuration,
+        continueWatching,
+        storeContinueWatching,
+        getContinueWatching,
+        removeContinueWatching,
       }}
     >
       {children}

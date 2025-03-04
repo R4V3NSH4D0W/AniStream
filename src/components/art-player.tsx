@@ -15,7 +15,6 @@ interface ArtPlayerProps {
   animeId: string;
   episodeId: string;
 }
-
 const ArtPlayerComponent = ({
   intro,
   outro,
@@ -30,10 +29,14 @@ const ArtPlayerComponent = ({
   const artInstance = useRef<Artplayer | null>(null);
   const { addPlayedDuration, getPlayedDuration } = useStorage();
   const storedPlayedPercentage = getPlayedDuration(animeId, episodeId);
-  console.log("ArtPlayerComponent", storedPlayedPercentage);
 
   useEffect(() => {
     if (!artRef.current) return;
+
+    const updatedOption = {
+      ...option,
+      subtitle: option.subtitle ?? {},
+    };
 
     const highlight = [
       { time: intro?.start, text: "Intro Start" },
@@ -54,10 +57,10 @@ const ArtPlayerComponent = ({
       }));
 
     const art = new Artplayer({
-      ...option,
+      ...updatedOption,
       container: artRef.current,
       highlight,
-      url: option.url,
+      url: updatedOption.url,
       settings: [
         {
           width: 250,

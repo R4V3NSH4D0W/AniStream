@@ -8,6 +8,10 @@ export type AnimeCategory =
   "most-popular" | 
   "movie" | 
   "latest-completed"|
+  "top-upcoming"|
+  "ONA"|
+  "OVA"|
+  "TV"|
   "recently-added";
 
 export async function fetchAnimeList(
@@ -34,7 +38,19 @@ export async function fetchAnimeList(
         break;
         case "latest-completed":
         response = await zoroAnime.fetchLatestCompleted(page);
-        break
+        break;
+        case "top-upcoming":
+          response = await zoroAnime.fetchTopUpcoming(page);
+        break;
+        case "ONA":
+          response = await zoroAnime.fetchONA(page);
+        break;
+        case "OVA":
+        response = await zoroAnime.fetchOVA(page);
+        break;
+        case "TV":
+        response = await zoroAnime.fetchTV(page);
+        break;
       default:
         throw new Error("Invalid anime category");
     }
@@ -113,16 +129,49 @@ export async function getAnimeInfo(id: string) {
 export async function getAnimeSource(episodeId: string) {
   try {
     const response = await fetch(`https://api.lenishmagar.me/api/zoroanime/episodesource?id=${episodeId}`);
-    console.log("Direct Hit", response);
     if (!response.ok) {
       throw new Error(`Failed to fetch episode source with status: ${response.status}`);
     }
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
     console.error("Failed to fetch Episode Source", error);
-    return null;
+    return null; 
+  }
+}
+
+
+export const searchAnime = async (query: string) => {
+  if (!query) {
+    return [];
+  }
+  try {
+    const response = await zoroAnime.search(query);
+    return response.results;
+  } catch (error) {
+    console.error("Error searching anime:", error);
+    return [];
+  }
+}
+
+
+export async function serchByGenres(genre: string, page: number = 1) {
+  try{
+   const response = await zoroAnime.genreSearch(genre, page);
+  
+   return {
+    results: response.results,
+    hasNextPage: response.hasNextPage,
+    currentPage: page
+  };
+  }catch(error){
+    console.error("Error fetching Genre",error)
+    return { 
+      results: [], 
+      hasNextPage: false, 
+      currentPage: page 
+    }; 
   }
 }
 

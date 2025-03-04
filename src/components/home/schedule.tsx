@@ -50,7 +50,7 @@ export default function ScheduleComponent() {
   }, [selectedDate, fetchData]);
 
   return (
-    <div className="bg-gray-900 text-white p-4 md:p-6 ">
+    <div className=" text-white p-4 md:p-6 ">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between py-4">
         <label className="text-2xl font-bold">Estimated Schedule</label>
         <label>{currentTime}</label>
