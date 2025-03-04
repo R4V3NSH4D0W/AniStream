@@ -36,6 +36,19 @@ const AnimePlayer = ({
   const hlsRef = useRef<Hls | null>(null);
   const uri = episodeInfo.sources[0]?.url;
 
+  const proxiedUri = useMemo(() => {
+    if (!episodeInfo?.sources[0]?.url) return "";
+    try {
+      const url = new URL(episodeInfo.sources[0].url);
+      return `/api/proxy/${encodeURIComponent(url.host)}${url.pathname
+        .split("/")
+        .map((segment) => encodeURIComponent(segment))
+        .join("/")}`;
+    } catch {
+      return "";
+    }
+  }, [episodeInfo]);
+
   const { storeContinueWatching } = useStorage();
 
   useEffect(() => {
@@ -54,12 +67,10 @@ const AnimePlayer = ({
 
   useEffect(() => {
     return () => {
-      // Cleanup HLS when component unmounts
       if (hlsRef.current) {
         hlsRef.current.destroy();
         hlsRef.current = null;
       }
-      // Cleanup ArtPlayer instance
       if (artInstance.current) {
         artInstance.current.destroy();
         artInstance.current = null;
@@ -73,7 +84,7 @@ const AnimePlayer = ({
     );
 
     return {
-      url: uri,
+      url: proxiedUri,
       customType: {
         m3u8: (video: HTMLVideoElement, url: string, art: ArtPlayerWithHls) => {
           if (Hls.isSupported()) {
@@ -128,7 +139,34 @@ const AnimePlayer = ({
       ],
       title: animeInfo?.title ?? undefined,
       poster: animeInfo?.image ?? undefined,
+      volume: 1,
+      isLive: false,
+      muted: false,
       autoplay: true,
+      autoOrientation: true,
+      pip: true,
+      autoSize: false,
+      autoMini: false,
+      screenshot: true,
+      setting: true,
+      loop: false,
+      flip: true,
+      playbackRate: true,
+      aspectRatio: true,
+      fullscreen: true,
+      fullscreenWeb: false,
+      subtitleOffset: false,
+      miniProgressBar: false,
+      mutex: true,
+      backdrop: true,
+      playsInline: true,
+      autoPlayback: true,
+      airplay: true,
+      theme: "#F5316F",
+      whitelist: ["*"],
+      moreVideoAttr: {
+        crossOrigin: "anonymous",
+      },
       subtitle:
         subOrDub === "sub" && englishSubtitle
           ? {
@@ -136,15 +174,15 @@ const AnimePlayer = ({
               type: "vtt" as const,
               style: { color: "#fff" },
               encoding: "utf-8" as const,
+              escape: false, // Added escape property
             }
           : undefined,
-      playbackRate: true,
-      aspectRatio: true,
-      fullscreen: true,
-      hotkey: true,
-      mutex: true,
+      hotkey: true, // Existing property retained
+      icons: {
+        // loading: `<img width="50" height="50" src="${loadingImage.src}">`, // Added loading icon
+      },
     };
-  }, [uri, animeInfo, episodeInfo.tracks, subOrDub]);
+  }, [proxiedUri, animeInfo, episodeInfo.tracks, subOrDub]);
 
   return (
     <div

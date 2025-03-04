@@ -129,6 +129,7 @@ export async function getAnimeInfo(id: string) {
 export async function getAnimeSource(episodeId: string) {
   try {
     const response = await fetch(`https://api.lenishmagar.me/api/zoroanime/episodesource?id=${episodeId}`);
+    console.log("Direct Hit", response);
     if (!response.ok) {
       throw new Error(`Failed to fetch episode source with status: ${response.status}`);
     }
@@ -157,6 +158,7 @@ export const searchAnime = async (query: string) => {
 
 
 export async function serchByGenres(genre: string, page: number = 1) {
+
   try{
    const response = await zoroAnime.genreSearch(genre, page);
   
