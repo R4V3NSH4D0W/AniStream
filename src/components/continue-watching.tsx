@@ -15,12 +15,12 @@ function ContinueWatching() {
   }
 
   return (
-    <div className="px-2 lg:px-8">
-      <div className="mt-4 lg:mt-8">
+    <div className="px-4 lg:px-8 -mb-6 lg:mb-0">
+      <div className="mt-2 lg:mt-8">
         <div className="flex flex-row items-center  space-x-2 h-full mb-4">
           <MdHistory size={24} className="text-white" />
           <div>
-            <label className="text-2xl font-semibold text-white ">
+            <label className=" text-xl lg:text-2xl font-semibold text-white ">
               Continue Watching
             </label>
           </div>
@@ -32,18 +32,18 @@ function ContinueWatching() {
             const { animeInfo, episodeId, episodeNumber } = anime;
 
             return (
-              <div key={animeKey} className="flex-shrink-0 w-48 relative group">
-                <Link
-                  href={`/anime/watch/${animeKey}/${episodeId}`}
-                  className="bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-colors"
-                >
-                  <div className="relative group">
+              <div
+                key={animeKey}
+                className="flex-shrink-0 w-48 relative group hover:bg-gray-800/40 transition-colors rounded-lg overflow-hidden"
+              >
+                <Link href={`/anime/watch/${animeKey}/${episodeId}`}>
+                  <div className="relative">
                     <Image
                       src={animeInfo?.image || "/default-image.jpg"}
                       alt={animeInfo?.title || "Unknown Title"}
                       width={200}
                       height={250}
-                      className="object-cover aspect-[2/2.3] transition-transform transform group-hover:scale-105"
+                      className="object-cover aspect-[2/2.3] rounded-t-lg"
                     />
 
                     <button
@@ -53,7 +53,8 @@ function ContinueWatching() {
                       <FiTrash size={20} />
                     </button>
                   </div>
-                  <div className="p-3">
+
+                  <div className="p-3 bg-gray-800/50 rounded-b-md group-hover:bg-gray-600 transition-colors">
                     <p className="text-white text-sm font-medium truncate">
                       {animeInfo?.title}
                     </p>

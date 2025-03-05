@@ -6,13 +6,11 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import { Button } from "../ui/button";
-import { FaPlus } from "react-icons/fa";
 import { IoCalendarOutline, IoPlayCircleOutline } from "react-icons/io5";
 import { truncateText } from "@/lib/utils";
 import { GoClock } from "react-icons/go";
 import { MdOutlineMicNone } from "react-icons/md";
 import { BsCcSquare } from "react-icons/bs";
-import { useStorage } from "@/provider/storage-provider";
 import Link from "next/link";
 
 interface HeroSectionProps {
@@ -21,7 +19,7 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ spotlight }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { addBookmark, removeBookmark, bookmarks } = useStorage();
+  // const { addBookmark, removeBookmark, bookmarks } = useStorage();
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % spotlight.length);
@@ -33,13 +31,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ spotlight }) => {
     );
   };
 
-  const toggleBookmark = (id: string) => {
-    if (bookmarks.includes(id)) {
-      removeBookmark(id);
-    } else {
-      addBookmark(id);
-    }
-  };
+  // const toggleBookmark = (id: string) => {
+  //   if (bookmarks.includes(id)) {
+  //     removeBookmark(id);
+  //   } else {
+  //     addBookmark(id);
+  //   }
+  // };
 
   return (
     <div className="relative w-full h-[400px] lg:h-[600px] overflow-hidden z-40">
@@ -62,13 +60,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ spotlight }) => {
             className="absolute z-0"
           />
           <div className="absolute bottom-10 left-4 lg:bottom-0  lg:top-20  lg:left-8 z-20 flex flex-col space-y-4">
-            <label className="text-white text-lg font-bold">
+            <label className="text-white text-md lg:text-lg font-bold">
               #{anime.rank as string}. Spotlight
             </label>
-            <label className="text-white text-xl lg:text-3xl font-bold w-2xl max-w-[20rem] lg:max-w-full ">
+            <label className="text-white text-lg lg:text-3xl font-bold w-2xl max-w-[25rem] lg:max-w-full ">
               {anime.title as string}
             </label>
-            <div className=" flex flex-row items-center space-x-3 text-white flex-wrap">
+            <div className=" flex flex-row items-center space-x-3 text-white flex-wrap text-sm lg:text-md">
               <div className=" flex flex-row items-center space-x-1 space-y-1">
                 <IoPlayCircleOutline />
                 <span> {anime.type}</span>
@@ -101,11 +99,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ spotlight }) => {
             <div className=" flex flex-row space-x-4 mt-4 z-30">
               <Link
                 href={`/anime/${anime?.id}`}
-                className=" bg-red-500 text-white rounded-sm text-sm flex items-center justify-center  lg:text-md hover:bg-red-600"
+                className=" bg-red-500 text-white rounded-sm text-sm flex items-center justify-center h-10  lg:text-md hover:bg-red-600"
               >
-                <span className=" px-4"> Learn More</span>
+                <span className=" px-8"> Learn More</span>
               </Link>
-              <Button
+              {/* <Button
                 variant="outline"
                 className={`border-red-500 text-sm lg:text-md hover:bg-red-600 hover:border-red-600 cursor-pointer  hover:text-white ${
                   bookmarks.includes(anime.id)
@@ -116,7 +114,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ spotlight }) => {
               >
                 <FaPlus />
                 {bookmarks.includes(anime.id) ? "Bookmarked" : "Bookmark"}
-              </Button>
+              </Button> */}
             </div>
           </div>
         </motion.div>

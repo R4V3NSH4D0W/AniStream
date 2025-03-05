@@ -26,7 +26,7 @@ function VerticalCard({
   const router = useRouter();
   return (
     <div className="mt-4 lg:mt-8 px-2 sm:px-4 lg:px-0 flex flex-col space-y-2 w-full ">
-      <span className="text-white text-xl sm:text-2xl font-semibold px-2 sm:px-0">
+      <span className="text-white text-xl lg:text-2xl font-semibold px-2 sm:px-0">
         {title}
       </span>
       <div className="flex flex-col space-y-2 sm:space-y-4 mt-1 sm:mt-2">

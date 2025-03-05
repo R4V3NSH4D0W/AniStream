@@ -15,7 +15,9 @@ function GenresCard({ genres }: IGenresProps) {
 
   return (
     <div className="mt-8 px-4 lg:px-0 flex flex-col space-y-2 w-full">
-      <label className="text-2xl text-white font-bold">Genres</label>
+      <label className=" text-xl lg:text-2xl text-white font-bold">
+        Genres
+      </label>
       <div className="grid grid-cols-3 gap-2">
         {visibleGenres?.map((genre, index) => (
           <Link
