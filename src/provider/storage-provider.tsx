@@ -60,7 +60,7 @@ export const StorageProvider = ({
   const [continueWatching, setContinueWatching] = useState<ContinueWatching>(
     {}
   );
-  console.log("continue Watching", continueWatching);
+
   useEffect(() => {
     const storedBookmarks = localStorage.getItem("bookmarks");
     if (storedBookmarks) setBookmarks(JSON.parse(storedBookmarks));
