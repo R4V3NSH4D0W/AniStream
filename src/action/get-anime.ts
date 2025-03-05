@@ -144,17 +144,17 @@ export async function getAnimeSource(episodeId: string) {
 
 
 export const searchAnime = async (query: string) => {
-  if (!query) {
-    return [];
-  }
+  if (!query) return [];
+
   try {
-    const response = await zoroAnime.search(query);
-    return response.results;
+    const response = await fetch(`/api/search?query=${query}`);
+    const data = await response.json();
+    return data || [];
   } catch (error) {
     console.error("Error searching anime:", error);
     return [];
   }
-}
+};
 
 
 export async function serchByGenres(genre: string, page: number = 1) {

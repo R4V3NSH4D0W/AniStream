@@ -1,6 +1,5 @@
-// app/api/schedule/route.ts
 import { NextResponse } from 'next/server';
-import { getSchedule } from '@/action/get-anime'; // Adjust the import path as needed
+import { getSchedule } from '@/action/get-anime'; 
 import { format } from 'date-fns';
 
 export async function GET(request: Request) {

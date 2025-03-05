@@ -162,7 +162,7 @@ const AnimePlayer = ({
       playsInline: true,
       autoPlayback: true,
       airplay: true,
-      theme: "#F5316F",
+      theme: "#B91C1C",
       whitelist: ["*"],
       moreVideoAttr: {
         crossOrigin: "anonymous",
@@ -174,10 +174,10 @@ const AnimePlayer = ({
               type: "vtt" as const,
               style: { color: "#fff" },
               encoding: "utf-8" as const,
-              escape: false, // Added escape property
+              escape: false,
             }
           : undefined,
-      hotkey: true, // Existing property retained
+      hotkey: true,
       icons: {
         // loading: `<img width="50" height="50" src="${loadingImage.src}">`, // Added loading icon
       },

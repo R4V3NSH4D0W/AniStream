@@ -8,8 +8,6 @@ import { IoPlayCircleOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { BsDot } from "react-icons/bs";
 import Link from "next/link";
-import { useStorage } from "@/provider/storage-provider";
-import { FaPlus } from "react-icons/fa";
 
 interface MovieHeroSectionProps {
   animeInfo: IAnimeResult | null;
@@ -28,7 +26,7 @@ type IType = {
 
 function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
   const router = useRouter();
-  const { addBookmark, removeBookmark, bookmarks } = useStorage();
+  // const { addBookmark, removeBookmark, bookmarks } = useStorage();
 
   const handleWatchNowClick = () => {
     if (animeInfo?.id && animeInfo?.episodes[0]) {
@@ -37,13 +35,13 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
     }
   };
 
-  const toggleBookmark = (id: string) => {
-    if (bookmarks.includes(id)) {
-      removeBookmark(id);
-    } else {
-      addBookmark(id);
-    }
-  };
+  // const toggleBookmark = (id: string) => {
+  //   if (bookmarks.includes(id)) {
+  //     removeBookmark(id);
+  //   } else {
+  //     addBookmark(id);
+  //   }
+  // };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[75%_25%] ">
@@ -59,7 +57,7 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
         <div className="absolute inset-0 backdrop-blur-md bg-black/70" />
         <div className="relative z-10 text-white text-center p-8 flex flex-col items-center lg:items-start">
           <div className="flex flex-col lg:flex-row lg:space-x-6 justify-center lg:justify-start items-center lg:items-start">
-            <div className="relative w-[12rem] h-[15rem] overflow-hidden rounded-md">
+            <div className="relative w-[12rem] h-[15rem] overflow-hidden rounded-md mt-12 lg:mt-0">
               <Image
                 src={animeInfo?.image || ""}
                 alt={animeInfo?.title as string}
@@ -98,7 +96,7 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
                   <IoPlayCircleOutline size={24} />
                   Watch Now
                 </Button>
-                <Button
+                {/* <Button
                   variant="outline"
                   className={`border-red-600 text-sm lg:text-md hover:bg-red-700 hover:border-red-700 cursor-pointer  hover:text-white ${
                     bookmarks.includes(animeInfo?.id as string)
@@ -111,7 +109,7 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
                   {bookmarks.includes(animeInfo?.id as string)
                     ? "Bookmarked"
                     : "Bookmark"}
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>
@@ -128,7 +126,7 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
         }}
       >
         <div className="absolute inset-0 backdrop-blur-md bg-black/60" />
-        <div className="relative z-10 text-white p-2 lg:p-8 flex flex-col lg:mt-6 items-start">
+        <div className="relative z-10 text-white p-4 lg:p-8 flex flex-col lg:mt-6 items-start">
           <div className="text-left flex flex-col space-y-2 text-md">
             <div className=" block lg:hidden">
               <div className=" flex flex-col">
@@ -175,7 +173,7 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
                   {animeInfo?.jikanData?.genres?.map((genre: IType) => (
                     <label
                       key={genre.mal_id}
-                      className="border-1 px-2 rounded-sm ml-2"
+                      className="border-1 px-2 my-1 rounded-sm ml-2"
                     >
                       {genre.name}
                     </label>

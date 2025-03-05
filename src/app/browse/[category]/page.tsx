@@ -1,5 +1,4 @@
 import { AnimeCategory, fetchAnimeList } from "@/action/get-anime";
-import NavBar from "@/components/navigation/nav-bar";
 import BrowseCard from "@/components/browse-card";
 
 export default async function BrowsePage({
@@ -17,7 +16,6 @@ export default async function BrowsePage({
 
   return (
     <div className="min-h-screen mt-14">
-      <NavBar />
       <BrowseCard
         title={formatCategoryTitle(resolvedParams.category)}
         animeList={data.results}

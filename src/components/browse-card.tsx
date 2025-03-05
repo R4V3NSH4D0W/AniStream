@@ -38,7 +38,9 @@ export default function BrowseCard({
 
   return (
     <div className="p-4 lg:px-8">
-      <h1 className="text-3xl font-bold text-white mb-8">{title}</h1>
+      <h1 className=" text-lg lg:text-2xl font-bold text-white mb-8">
+        {title}
+      </h1>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-8">
         {animeList.map((anime) => (

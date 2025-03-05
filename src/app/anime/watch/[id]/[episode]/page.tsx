@@ -21,9 +21,16 @@ export default async function WatchPage({
 
   if (!animeServer) {
     return (
-      <div className="flex items-center justify-center h-screen text-center text-white">
-        <p className="text-lg">
-          Failed to fetch episode source. Please try again later.
+      <div className="flex flex-col items-center justify-center h-screen text-white bg-gray-900">
+        <div className="mb-4 animate-bounce">
+          <Image src="/robot.png" alt="Sad Robot" width={100} height={100} />
+        </div>
+
+        <h1 className=" text-xl lg:text-3xl font-bold text-center text-red-500 drop-shadow-md">
+          Oops! Something went wrong.
+        </h1>
+        <p className="text-sm lg:text-lg text-gray-300 mt-2">
+          Please try again later.
         </p>
       </div>
     );

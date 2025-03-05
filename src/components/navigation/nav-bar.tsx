@@ -16,7 +16,6 @@ import {
   FaTv,
   FaPlayCircle,
   FaPlusCircle,
-  FaRegBookmark,
 } from "react-icons/fa";
 import Image from "next/image";
 
@@ -251,7 +250,7 @@ function NavBar() {
           isDrawerOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="p-2 px-4 border-b border-gray-700">
+        <div className="p-2 px-4 border-b border-gray-700 pt-2">
           <Link
             href={"/"}
             onClick={() => setIsDrawerOpen(false)}
@@ -278,14 +277,14 @@ function NavBar() {
                   className="flex items-center p-2 text-gray-300 hover:bg-gray-800 rounded-lg transition-colors"
                   onClick={() => setIsDrawerOpen(false)}
                 >
-                  <span className="text-lg">{item.icon}</span>
+                  <span className="text-md lg:text-lg">{item.icon}</span>
                   <span className="ml-3">{item.name}</span>
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
-        <div className=" border-t border-gray-700">
+        {/* <div className=" border-t border-gray-700">
           <ul className="px-2 py-2 space-y-2">
             <Link href={"/bookmark"} onClick={() => setIsDrawerOpen(false)}>
               <li className="flex items-center p-2 text-gray-300 hover:bg-gray-800 rounded-lg transition-colors">
@@ -294,7 +293,7 @@ function NavBar() {
               </li>
             </Link>
           </ul>
-        </div>
+        </div> */}
       </div>
     </>
   );

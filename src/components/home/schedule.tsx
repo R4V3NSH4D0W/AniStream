@@ -52,8 +52,10 @@ export default function ScheduleComponent() {
   return (
     <div className=" text-white p-4 md:p-6 ">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between py-4">
-        <label className="text-2xl font-bold">Estimated Schedule</label>
-        <label>{currentTime}</label>
+        <label className=" text-xl lg:text-2xl font-bold">
+          Estimated Schedule
+        </label>
+        <label className=" text-sm lg:text-lg">{currentTime}</label>
       </div>
       <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
         <div className="flex flex-row lg:justify-center w-full">

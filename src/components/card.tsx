@@ -25,12 +25,12 @@ export function Card({
   return (
     <div className=" mt-2 lg:mt-5 p-4 lg:p-2 lg:px-8">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-bold text-white">{title}</h2>
+        <h2 className=" text-xl lg:text-2xl font-bold text-white">{title}</h2>
         {showViewAll && (
           <Link href={viewAllLink} prefetch={true}>
             <Button
               variant="ghost"
-              className="text-red-500 hover:bg-transparent hover:text-red-600 cursor-pointer"
+              className="text-red-500 hover:bg-transparent hover:text-red-600 cursor-pointer text-sm lg:text-md"
             >
               View All
               <IoIosArrowForward className="ml-1" />
