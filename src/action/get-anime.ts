@@ -128,19 +128,28 @@ export async function getAnimeInfo(id: string) {
 
 export async function getAnimeSource(episodeId: string) {
   try {
-    const response = await fetch(`https://api.lenishmagar.me/api/zoroanime/episodesource?id=${episodeId}`);
-    console.log("Direct Hit", response);
+    const response = await fetch(
+      `https://api.lenishmagar.me/api/zoroanime/episodesource?id=${episodeId}`
+    );
+
     if (!response.ok) {
-      throw new Error(`Failed to fetch episode source with status: ${response.status}`);
+      console.error(`Failed to fetch episode source: ${response.status}`);
+      return null;
     }
 
     const data = await response.json();
+    if (!data || !data.sources) {
+      console.error("Invalid episode source data:", data);
+      return null;
+    }
+
     return data;
   } catch (error) {
-    console.error("Failed to fetch Episode Source", error);
-    return null; 
+    console.error("Error fetching Episode Source:", error);
+    return null;
   }
 }
+
 
 
 export const searchAnime = async (query: string) => {

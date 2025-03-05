@@ -10,35 +10,42 @@ interface IReleatedProps {
 
 function ReleatedCard({ title, animeInfo }: IReleatedProps) {
   return (
-    <div className=" px-2 lg:px-8">
+    <div className=" px-4 lg:px-8 -mb-4">
       {animeInfo?.relatedAnime?.length > 0 && (
         <div className="mt-8">
-          <h2 className="text-2xl font-semibold text-white mb-4">{title}</h2>
+          <h2 className=" text-lg lg:text-2xl font-semibold text-white mb-4">
+            {title}
+          </h2>
           <div className="flex overflow-x-auto pb-4 gap-4 no-scrollbar">
             {animeInfo?.relatedAnime.map((rel: IAnimeInfo) => (
-              <Link
+              <div
                 key={rel.id}
-                href={`/anime/${rel?.id}`}
-                className="flex-shrink-0 w-48"
+                className="flex-shrink-0 w-43 lg:w-48 h-70 lg:h-72 relative group hover:bg-gray-800/40 transition-colors rounded-lg overflow-hidden"
               >
-                <div className="bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-colors">
-                  <Image
-                    src={rel.image || "/default-image.jpg"}
-                    alt={rel.title as string}
-                    width={200}
-                    height={250}
-                    className="object-cover aspect-[2/2.3]"
-                  />
-                  <div className="p-3">
+                <Link
+                  key={rel.id}
+                  href={`/anime/${rel?.id}`}
+                  className="flex-shrink-0 w-48"
+                >
+                  <div className="relative w-full h-55">
+                    <Image
+                      src={rel?.image || "/default-image.jpg"}
+                      alt={(rel?.title as string) || "Unknown Title"}
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-t-lg"
+                    />
+                  </div>
+                  <div className="p-3 z-40  bg-gray-800/50 rounded-b-md group-hover:bg-gray-700/40 transition-colors">
                     <p className="text-white text-sm font-medium truncate">
                       {rel.title as string}
                     </p>
-                    <span className="text-xs text-gray-400 mt-1">
+                    <span className="text-xs text-gray-200 mt-1">
                       {rel.type}
                     </span>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             ))}
           </div>
         </div>

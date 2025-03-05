@@ -35,7 +35,7 @@ const EpisodeList = ({
         <input
           type="text"
           placeholder="Search episode..."
-          className="px-3 py-1 rounded-lg bg-gray-800/30 text-white border border-gray-600 "
+          className="px-3 ml-2 py-1 rounded-lg bg-gray-800/30 text-white border border-gray-600 "
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />

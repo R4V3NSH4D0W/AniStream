@@ -25,7 +25,7 @@ export function Card({
   return (
     <div className=" mt-2 lg:mt-5 p-4 lg:p-2 lg:px-8">
       <div className="flex items-center justify-between mb-4">
-        <h2 className=" text-xl lg:text-2xl font-bold text-white">{title}</h2>
+        <h2 className=" text-lg lg:text-2xl font-bold text-white">{title}</h2>
         {showViewAll && (
           <Link href={viewAllLink} prefetch={true}>
             <Button
@@ -51,7 +51,7 @@ export function Card({
                   src={anime.image || "/placeholder.jpg"}
                   alt={anime.title?.toString() || "Anime image"}
                   width={300}
-                  height={400}
+                  height={300}
                   className="rounded-lg object-cover aspect-[2/3] "
                 />
                 <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black to-transparent rounded-b-md">
