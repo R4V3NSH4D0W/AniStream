@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { getAnimeInfo, getAnimeSource } from "@/action/get-anime";
 import AnimePlayer from "@/components/anime/anime-player";
 import EpisodeList from "@/components/anime/episode-list";

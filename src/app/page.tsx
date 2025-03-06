@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Suspense } from "react";
 import { getSpotLight, getGernres } from "@/action/get-anime";
 import HeroSection from "@/components/home/herosection";

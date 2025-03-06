@@ -1,11 +1,11 @@
+export const dynamic = "force-dynamic";
 import { getAnimeInfo } from "@/action/get-anime";
 import AnimeHeroSection from "@/components/anime/anime-hero-section";
 import { Card } from "@/components/card";
 import EpisodesCard from "@/components/episode-card";
-import AnimeHeroSkeleton from "@/components/skeleton/anime-hero-skeleton";
 
 import { VerticalCardSection } from "@/lib/helper";
-import React, { Suspense } from "react";
+import React from "react";
 
 async function AnimeDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -13,9 +13,7 @@ async function AnimeDetail({ params }: { params: Promise<{ id: string }> }) {
 
   return (
     <div className="space-y-8 mb-4">
-      <Suspense fallback={<AnimeHeroSkeleton />}>
-        <AnimeHeroSection animeInfo={animeInfo} />
-      </Suspense>
+      <AnimeHeroSection animeInfo={animeInfo} />
 
       {animeInfo?.episodes && (
         <EpisodesCard episodes={animeInfo?.episodes} id={animeInfo.id} />
