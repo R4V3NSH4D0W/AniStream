@@ -49,7 +49,9 @@ export default function EpisodesCard({
       <div className="w-full">
         <div className="mb-4 space-y-2">
           <div className="flex flex-col md:flex-row justify-between md:items-center gap-3">
-            <label className="text-2xl font-bold text-white">Episodes</label>
+            <label className=" text-lg lg:text-2xl font-bold text-white">
+              Episodes
+            </label>
 
             <div className="flex flex-col md:flex-row md:items-center w-full md:w-auto gap-2">
               {!searchTerm && (
