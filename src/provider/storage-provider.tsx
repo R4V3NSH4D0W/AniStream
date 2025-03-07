@@ -84,7 +84,7 @@ export const StorageProvider = ({
       const episode = episodes.find((ep) => ep.id === episodeId);
       if (!episode) return;
 
-      const timestamp = Date.now(); // Get current timestamp
+      const timestamp = Date.now();
 
       setContinueWatching((prev) => {
         const updated = {

@@ -63,7 +63,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ spotlight }) => {
             <label className="text-white text-md lg:text-lg font-bold">
               #{anime.rank as string}. Spotlight
             </label>
-            <label className="text-white text-lg lg:text-3xl font-bold w-2xl max-w-[25rem] lg:max-w-full ">
+            <label className="text-white text-lg lg:text-3xl font-bold w-2xl max-w-[22rem] lg:max-w-full ">
               {anime.title as string}
             </label>
             <div className=" flex flex-row items-center space-x-3 text-white flex-wrap text-sm lg:text-md">
