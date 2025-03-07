@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { AnimeCategory, fetchAnimeList } from "@/action/get-anime";
 import VerticalCard from "@/components/home/vertical-card";
 import { formatCategoryTitle } from "./utils";

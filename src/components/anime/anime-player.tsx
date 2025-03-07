@@ -34,7 +34,7 @@ const AnimePlayer = ({
   const playerRef = useRef<HTMLDivElement>(null);
   const artInstance = useRef<ArtPlayerWithHls | null>(null);
   const hlsRef = useRef<Hls | null>(null);
-  const uri = episodeInfo.sources[0]?.url;
+  const uri = episodeInfo.sources?.[0]?.url;
 
   const proxiedUri = useMemo(() => {
     if (!episodeInfo?.sources[0]?.url) return "";

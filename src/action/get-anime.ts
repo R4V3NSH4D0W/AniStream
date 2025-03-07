@@ -118,7 +118,7 @@ export async function getAnimeInfo(id: string) {
     }
     return {
       ...animeInfo,
-      jikanData: jikanData?.data || null,
+      jikanData: jikanData?.data,
     };
   } catch (error) {
     console.error("Error fetching anime info:", error);

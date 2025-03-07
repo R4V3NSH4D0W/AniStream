@@ -3,7 +3,6 @@ import { getAnimeInfo } from "@/action/get-anime";
 import AnimeHeroSection from "@/components/anime/anime-hero-section";
 import { Card } from "@/components/card";
 import EpisodesCard from "@/components/episode-card";
-
 import { VerticalCardSection } from "@/lib/helper";
 import React from "react";
 
