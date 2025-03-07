@@ -29,6 +29,7 @@ const ArtPlayerComponent = ({
   const artInstance = useRef<Artplayer | null>(null);
   const { addPlayedDuration, getPlayedDuration } = useStorage();
   const storedPlayedPercentage = getPlayedDuration(animeId, episodeId);
+  const wakeLockRef = useRef<WakeLockSentinel | null>(null);
 
   useEffect(() => {
     if (!artRef.current) return;
@@ -88,6 +89,31 @@ const ArtPlayerComponent = ({
 
     artInstance.current = art;
 
+    art.on("play", async () => {
+      if ("wakeLock" in navigator) {
+        try {
+          wakeLockRef.current = await navigator.wakeLock.request("screen");
+        } catch (err) {
+          console.error("Failed to acquire wake lock:", err);
+        }
+      }
+    });
+
+    art.on("pause", () => {
+      if (wakeLockRef.current) {
+        wakeLockRef.current.release().then(() => {
+          wakeLockRef.current = null;
+        });
+      }
+    });
+    art.on("video:ended", () => {
+      if (wakeLockRef.current) {
+        wakeLockRef.current.release().then(() => {
+          wakeLockRef.current = null;
+        });
+      }
+    });
+
     art.on("resize", () => {
       art.subtitle.style({ fontSize: `${art.height * 0.05}px` });
     });
@@ -102,6 +128,11 @@ const ArtPlayerComponent = ({
     getInstance?.(art);
 
     return () => {
+      if (wakeLockRef.current) {
+        wakeLockRef.current.release().then(() => {
+          wakeLockRef.current = null;
+        });
+      }
       art.destroy(true);
       artInstance.current = null;
     };
