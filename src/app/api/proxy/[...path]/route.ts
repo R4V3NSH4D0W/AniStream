@@ -13,7 +13,7 @@ export async function GET(req: NextRequest, { params }: {
     }
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 10000);
+    const timeout = setTimeout(() => controller.abort(), 20000);
 
     const response = await fetch(targetUrl.toString(), {
       signal: controller.signal,

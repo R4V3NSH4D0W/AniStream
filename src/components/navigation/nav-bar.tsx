@@ -223,7 +223,7 @@ function NavBar() {
               className="md:hidden text-white text-xl"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
             >
-              <IoSearchOutline />
+              <IoSearchOutline size={24} />
             </button>
           </div>
         </div>

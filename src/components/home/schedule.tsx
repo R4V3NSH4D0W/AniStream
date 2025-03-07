@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { format, addDays, subDays } from "date-fns";
 import { formatDateWithTimezone } from "@/lib/utils";
+import Link from "next/link";
 
 interface ScheduleItem {
   id: string;
@@ -99,7 +100,9 @@ export default function ScheduleComponent() {
 
       <div className="space-y-2">
         {(showAll ? scheduleData : scheduleData.slice(0, 5)).map((anime) => (
-          <div
+          <Link
+            href={`/anime/${anime.id}`}
+            prefetch={true}
             key={anime.id}
             className="group grid grid-cols-[1fr_3fr_1fr] md:grid-cols-[10%_80%_10%] items-center border-b border-gray-700 py-3 
                        text-gray-300 hover:text-white transition-all duration-200 transform cursor-pointer
@@ -114,7 +117,7 @@ export default function ScheduleComponent() {
             <div className="text-center text-sm md:text-base">
               {anime.airingEpisode}
             </div>
-          </div>
+          </Link>
         ))}
 
         {scheduleData.length > 5 && (
