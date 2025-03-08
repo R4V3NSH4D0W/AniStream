@@ -1,5 +1,6 @@
 import { ANIME } from "@consumet/extensions";
 
+
 const zoroAnime = new ANIME.Zoro();
 
 export type AnimeCategory = 
@@ -110,21 +111,34 @@ export async function getAnimeInfo(id: string) {
 
     if (malId) {
       try {
-        const response = await fetch(`https://api.jikan.moe/v4/anime/${malId}`);
-        jikanData = await response.json();
+        const response = await fetch(`https://api.jikan.moe/v4/anime/${malId}`, {
+          cache: "no-store",
+          headers: {
+            'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Jikan API error: ${response.status} ${response.statusText}`);
+        }
+
+        const jsonResponse = await response.json();
+        jikanData = jsonResponse?.data || null;
       } catch (jikanError) {
         console.error("Error fetching anime info from Jikan:", jikanError);
       }
     }
+
     return {
       ...animeInfo,
-      jikanData: jikanData?.data,
+      jikanData:jikanData,
     };
   } catch (error) {
     console.error("Error fetching anime info:", error);
     return null;
   }
 }
+
 
 export async function getAnimeSource(episodeId: string) {
   try {
