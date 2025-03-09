@@ -1,5 +1,6 @@
 import { ANIME } from "@consumet/extensions";
 
+
 const zoroAnime = new ANIME.Zoro();
 
 export type AnimeCategory = 
@@ -105,26 +106,64 @@ export async function getSchedule(date?:string){
 export async function getAnimeInfo(id: string) {
   try {
     const animeInfo = await zoroAnime.fetchAnimeInfo(id);
-    const malId = animeInfo?.malID || animeInfo?.alID;
-    let jikanData = null;
-
-    if (malId) {
-      try {
-        const response = await fetch(`https://api.jikan.moe/v4/anime/${malId}`);
-        jikanData = await response.json();
-      } catch (jikanError) {
-        console.error("Error fetching anime info from Jikan:", jikanError);
-      }
-    }
-    return {
-      ...animeInfo,
-      jikanData: jikanData?.data,
-    };
+   return animeInfo;
   } catch (error) {
     console.error("Error fetching anime info:", error);
     return null;
   }
 }
+
+// export async function getAnimeInfo(id: string) {
+//   try {
+//     const animeInfo = await zoroAnime.fetchAnimeInfo(id);
+//     const malId = animeInfo?.malID || animeInfo?.alID;
+//     let jikanData = [];
+
+//     if (malId) {
+//       try {
+//         const response = await fetch(`https://api.jikan.moe/v4/anime/${malId}`, {
+//           cache: "no-store",
+//           headers: {
+//             'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate'
+//           }
+//         });
+
+//         if (!response.ok) {
+//           throw new Error(`Jikan API error: ${response.status} ${response.statusText}`);
+//         }
+
+//         const jsonResponse = await response.json();
+//         jikanData = jsonResponse?.data || [];
+//       } catch (jikanError) {
+//         console.error("Error fetching anime info from Jikan:", jikanError);
+//       }
+//     }
+
+//     return {
+//       ...animeInfo,
+//       jikanData:jikanData,
+//     };
+//   } catch (error) {
+//     console.error("Error fetching anime info:", error);
+//     return null;
+//   }
+// }
+
+export const fetchJikanData = async (malId: number) => {
+  try {
+    const response = await fetch(`https://api.jikan.moe/v4/anime/${malId}`);
+    if (!response.ok) {
+      throw new Error(`Jikan API error: ${response.status}`);
+    }
+    const data = await response.json();
+    return data?.data;
+  } catch (error) {
+    console.error("Error fetching Jikan data:", error);
+    return null; 
+  }
+};
+
+
 
 export async function getAnimeSource(episodeId: string) {
   try {

@@ -41,11 +41,7 @@ export function Card({
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 ">
         {animeList &&
           animeList.map((anime) => (
-            <Link
-              key={anime.id}
-              href={`/anime/${anime.id}`} // Prefetch the anime detail page
-              prefetch={true}
-            >
+            <Link key={anime.id} href={`/anime/${anime.id}`} prefetch={true}>
               <div className="relative cursor-pointer transition-transform hover:scale-105">
                 <Image
                   src={anime.image || "/placeholder.jpg"}
