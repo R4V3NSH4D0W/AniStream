@@ -1,21 +1,19 @@
 "use client";
 import { IAnimeResult } from "@consumet/extensions";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { truncateText } from "@/lib/utils";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { BsDot } from "react-icons/bs";
 import Link from "next/link";
+import { JikanData } from "@/types/anime";
+import { fetchJikanData } from "@/action/get-anime";
 
 interface MovieHeroSectionProps {
   animeInfo: IAnimeResult | null;
 }
-type Title = {
-  type: "Default" | "Synonym" | "Japanese" | "English";
-  title: string;
-};
 
 type IType = {
   mal_id: number;
@@ -26,7 +24,18 @@ type IType = {
 
 function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
   const router = useRouter();
-  // const { addBookmark, removeBookmark, bookmarks } = useStorage();
+  const [jikanData, setJikanData] = useState<JikanData | null>(null);
+
+  useEffect(() => {
+    if (!animeInfo?.malID) return;
+
+    const getJikanData = async () => {
+      const data = await fetchJikanData(animeInfo.malID);
+      if (data) setJikanData(data);
+    };
+
+    getJikanData();
+  }, [animeInfo?.malID]);
 
   const handleWatchNowClick = () => {
     if (animeInfo?.id && animeInfo?.episodes[0]) {
@@ -139,30 +148,30 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
             </div>
             <label>
               <span className=" font-semibold">Japanese:</span>{" "}
-              {animeInfo?.jikanData?.title_japanese}
+              {jikanData?.title_japanese}
             </label>
             <label>
               <span className=" font-semibold">Synonyms: </span>
-              {animeInfo?.jikanData?.titles
-                ?.filter((t: Title) => t.type === "Synonym")
-                .map((t: Title) => t.title)
+              {jikanData?.titles
+                ?.filter((t) => t.type === "Synonym")
+                .map((t) => t.title)
                 .join(", ") || "N/A"}
             </label>
             <label>
               <span className=" font-semibold">Aired:</span>{" "}
-              {animeInfo?.jikanData?.aired?.string}{" "}
+              {jikanData?.aired?.string}{" "}
             </label>
             <label>
               <span className=" font-semibold">Premiered:</span>{" "}
-              {animeInfo?.jikanData?.season}{" "}
+              {jikanData?.season}{" "}
             </label>
             <label>
               <span className=" font-semibold">Duration:</span>{" "}
-              {animeInfo?.jikanData?.duration}{" "}
+              {jikanData?.duration}{" "}
             </label>
             <label>
               <span className=" font-semibold">Status:</span>
-              {animeInfo?.jikanData?.status}{" "}
+              {jikanData?.status}{" "}
             </label>
 
             <div>
@@ -170,7 +179,7 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
               <div className="flex flex-row items-center">
                 <label className="flex flex-row items-center flex-wrap my-2">
                   <span className=" font-semibold"> Genres:</span>
-                  {animeInfo?.jikanData?.genres?.map((genre: IType) => (
+                  {jikanData?.genres?.map((genre: IType) => (
                     <label
                       key={genre.mal_id}
                       className="border-1 px-2 my-1 rounded-sm ml-2"
@@ -186,7 +195,7 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
             <div className="flex flex-row items-center flex-wrap">
               <label className="flex flex-row items-center space-x-1 flex-wrap">
                 <span className=" font-semibold"> Studios: </span>
-                {animeInfo?.jikanData?.studios?.map((Studio: IType) => (
+                {jikanData?.studios?.map((Studio: IType) => (
                   <label key={Studio.mal_id}>{Studio.name}</label>
                 )) || "N/A"}
               </label>
@@ -195,7 +204,7 @@ function AnimeHeroSection({ animeInfo }: MovieHeroSectionProps) {
             <div className="flex flex-row items-center flex-wrap">
               <label className="flex flex-row items-center space-x-1 flex-wrap">
                 <span className=" font-semibold"> Producers: </span>
-                {animeInfo?.jikanData?.producers?.map(
+                {jikanData?.producers?.map(
                   (producer: IType, index: number, arr: IType[]) => (
                     <label key={producer.mal_id}>
                       {producer.name}
