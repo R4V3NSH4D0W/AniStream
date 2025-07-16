@@ -49,4 +49,4 @@ jobs:
             docker rm anistream || true
 
             # Run the new container
-            docker run -d --name anistream -p 3005:3005 lenishmagar/anistream
+            docker run -d --name anistream -p 3005:3000 lenishmagar/anistream
