@@ -25,8 +25,8 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=3005
 
-EXPOSE 3000
+EXPOSE 3005
 
 CMD ["yarn", "start"]
